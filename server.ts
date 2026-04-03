@@ -579,7 +579,34 @@ async function startServer() {
   });
 
   // Serve static files from the public directory
-  app.use(express.static(path.join(process.cwd(), 'public')));
+  const publicPath = path.resolve(process.cwd(), 'public');
+  const distPath = path.resolve(process.cwd(), 'dist');
+  
+  console.log(`Serving static files from: ${publicPath}`);
+  
+  // Explicit route for images to ensure they are served regardless of static middleware order
+  app.get(['/bess.jpeg', '/dvc-logo.jpeg', '/bess.jpg', '/dvc-logo.jpg'], (req, res) => {
+    const filename = path.basename(req.path);
+    const possiblePaths = [
+      path.join(publicPath, filename),
+      path.join(distPath, filename),
+      path.join(process.cwd(), filename)
+    ];
+    
+    for (const p of possiblePaths) {
+      if (fs.existsSync(p)) {
+        console.log(`Serving image ${filename} from ${p}`);
+        return res.sendFile(p);
+      }
+    }
+    
+    console.warn(`Image ${filename} not found in any of: ${possiblePaths.join(', ')}`);
+    res.status(404).send('Image not found');
+  });
+
+  if (fs.existsSync(publicPath)) {
+    app.use(express.static(publicPath));
+  }
 
   if (process.env.NODE_ENV !== "production") {
     const viteModule = await import("vite");
