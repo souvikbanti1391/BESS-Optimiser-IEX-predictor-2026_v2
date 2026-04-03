@@ -2,9 +2,9 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Battery, Zap, Shield, ArrowRight, Activity, Cpu, Database } from 'lucide-react';
 
-// Bypass Render and load directly from GitHub
-const bessImg = "https://raw.githubusercontent.com/souvikbanti1391/BESS-Optimiser-IEX-predictor-2026_v2/main/src/assets/bess.jpeg";
-const dvcLogo = "https://raw.githubusercontent.com/souvikbanti1391/BESS-Optimiser-IEX-predictor-2026_v2/main/src/assets/dvc-logo.jpeg";
+// Using direct PostImages CDN links to bypass Render static routing
+const bessImg = "https://i.postimg.cc/mD3mTLGz/bess.jpg";
+const dvcLogo = "https://i.postimg.cc/hGTr0DvL/DVC-logo.jpg";
 
 export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' | 'optimizer' | 'financials') => void }) {
   return (
