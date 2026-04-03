@@ -8,9 +8,12 @@ Exact logic from user's provided code.
 import sys
 import os
 
-# Ensure we can find packages installed via pip --user in various environments
-sys.path.append('/tmp/.local/lib/python3.10/site-packages')
+# Ensure we can find packages installed via pip -t ./python_modules or --user
+sys.path.insert(0, os.path.join(os.getcwd(), 'python_modules'))
 sys.path.append(os.path.expanduser('~/.local/lib/python3.10/site-packages'))
+sys.path.append(os.path.expanduser('~/.local/lib/python3.11/site-packages'))
+sys.path.append(os.path.expanduser('~/.local/lib/python3.12/site-packages'))
+sys.path.append('/tmp/.local/lib/python3.10/site-packages')
 sys.path.append('/usr/local/lib/python3.10/dist-packages')
 
 import pandas as pd

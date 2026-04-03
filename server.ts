@@ -354,6 +354,7 @@ async function startServer() {
       }
 
       const commands = [
+        `${pythonCmd} -m pip install ${installTarget} -t ./python_modules --no-cache-dir`,
         `${pythonCmd} -m pip install ${installTarget} --break-system-packages --user --no-cache-dir --only-binary :all:`,
         `${pythonCmd} -m pip install ${installTarget} --break-system-packages --no-cache-dir --only-binary :all:`,
         `${pythonCmd} -m pip install ${installTarget} --user --no-cache-dir --only-binary :all:`,
@@ -516,7 +517,10 @@ async function startServer() {
         ...process.env,
         PYTHONPATH: [
           process.env.PYTHONPATH,
+          path.join(process.cwd(), 'python_modules'),
           path.join(process.env.HOME || '/root', '.local/lib/python3.10/site-packages'),
+          path.join(process.env.HOME || '/root', '.local/lib/python3.11/site-packages'),
+          path.join(process.env.HOME || '/root', '.local/lib/python3.12/site-packages'),
           '/tmp/.local/lib/python3.10/site-packages',
           process.cwd()
         ].filter(Boolean).join(path.delimiter)
@@ -591,7 +595,10 @@ async function startServer() {
           ...process.env,
           PYTHONPATH: [
             process.env.PYTHONPATH,
+            path.join(process.cwd(), 'python_modules'),
             path.join(process.env.HOME || '/root', '.local/lib/python3.10/site-packages'),
+            path.join(process.env.HOME || '/root', '.local/lib/python3.11/site-packages'),
+            path.join(process.env.HOME || '/root', '.local/lib/python3.12/site-packages'),
             '/tmp/.local/lib/python3.10/site-packages',
             process.cwd()
           ].filter(Boolean).join(path.delimiter)

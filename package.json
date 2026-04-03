@@ -7,7 +7,7 @@
     "dev": "tsx server.ts",
     "start": "NODE_ENV=production tsx server.ts",
     "build": "vite build",
-    "build:render": "npm install && python3 -m pip install --no-cache-dir --only-binary :all: -r requirements.txt --break-system-packages --user && npx vite build",
+    "build:render": "npm install && python3 -m pip install --no-cache-dir -t ./python_modules -r requirements.txt && npx vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit"
