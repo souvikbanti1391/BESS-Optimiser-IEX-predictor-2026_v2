@@ -231,8 +231,11 @@ async function startServer() {
   // Ensure directories exist
   const uploadDir = path.join(process.cwd(), 'uploads');
   const modelDir = path.join(process.cwd(), 'models');
+  const pythonModulesDir = path.join(process.cwd(), 'python_modules');
+  
   if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
   if (!fs.existsSync(modelDir)) fs.mkdirSync(modelDir);
+  if (!fs.existsSync(pythonModulesDir)) fs.mkdirSync(pythonModulesDir);
 
   console.log(`Current working directory: ${process.cwd()}`);
   console.log(`Model directory: ${modelDir}`);
@@ -349,137 +352,43 @@ async function startServer() {
           console.log(`Found python: ${version}`);
           pythonCmd = 'python';
         } catch (e2) {
-          throw new Error("Neither python3 nor python found in path.");
+          return res.status(500).json({ error: "Neither python3 nor python found in path." });
         }
       }
 
+      // Use a longer timeout for the installation process
+      const installOptions = { stdio: 'inherit' as const, timeout: 300000 }; // 5 minutes
+
       const commands = [
-        `${pythonCmd} -m pip install ${installTarget} -t ./python_modules --no-cache-dir`,
+        `${pythonCmd} -m pip install ${installTarget} -t ./python_modules --no-cache-dir --only-binary :all:`,
         `${pythonCmd} -m pip install ${installTarget} --break-system-packages --user --no-cache-dir --only-binary :all:`,
-        `${pythonCmd} -m pip install ${installTarget} --break-system-packages --no-cache-dir --only-binary :all:`,
-        `${pythonCmd} -m pip install ${installTarget} --user --no-cache-dir --only-binary :all:`,
-        `${pythonCmd} -m pip install ${installTarget} --no-cache-dir --only-binary :all:`,
-        `pip3 install ${installTarget} --break-system-packages --user --no-cache-dir --only-binary :all:`,
-        `pip install ${installTarget} --break-system-packages --user --no-cache-dir --only-binary :all:`,
-        `pip3 install ${installTarget} --user --no-cache-dir --only-binary :all:`,
-        `pip install ${installTarget} --user --no-cache-dir --only-binary :all:`
+        `${pythonCmd} -m pip install ${installTarget} --user --no-cache-dir --only-binary :all:`
       ];
 
       let installed = false;
+      let lastError = "";
+
       for (const cmd of commands) {
         try {
           console.log(`Attempting: ${cmd}`);
-          execSync(cmd, { stdio: 'inherit' });
+          execSync(cmd, installOptions);
           installed = true;
           console.log(`Command succeeded: ${cmd}`);
           break;
         } catch (e: any) {
-          console.log(`Command failed: ${cmd}. Error: ${e.message}`);
-          if (e.stderr) console.log(`Stderr: ${e.stderr.toString()}`);
+          lastError = e.message;
+          console.log(`Command failed: ${cmd}. Error: ${lastError}`);
         }
       }
 
       if (installed) {
-        return res.json({ success: true, message: "Python environment fixed successfully via direct installation" });
+        return res.json({ success: true, message: "Python environment fixed successfully" });
       }
 
-      console.log('Direct installation failed, trying ensurepip...');
-      try {
-        console.log(`Attempting: ${pythonCmd} -m ensurepip --upgrade`);
-        execSync(`${pythonCmd} -m ensurepip --upgrade`, { stdio: 'inherit' });
-        // Try again after ensurepip
-        for (const cmd of commands) {
-          try {
-            console.log(`Attempting after ensurepip: ${cmd}`);
-            execSync(cmd, { stdio: 'inherit' });
-            installed = true;
-            console.log(`Command succeeded after ensurepip: ${cmd}`);
-            break;
-          } catch (e) {}
-        }
-      } catch (e: any) {
-        console.log(`ensurepip failed: ${e.message}`);
-      }
-
-      if (installed) {
-        return res.json({ success: true, message: "Python environment fixed successfully after ensurepip" });
-      }
-
-      console.log('Trying to download get-pip.py...');
-
-      const getPipPath = path.join(process.cwd(), 'get-pip.py');
-      
-      // Only download if not already present
-      if (!fs.existsSync(getPipPath)) {
-        console.log('Downloading get-pip.py...');
-        const getPipUrl = 'https://bootstrap.pypa.io/get-pip.py';
-        const response = await axios({
-          method: 'GET',
-          url: getPipUrl,
-          responseType: 'stream'
-        });
-        
-        const writer = fs.createWriteStream(getPipPath);
-        response.data.pipe(writer);
-        
-        await new Promise((resolve, reject) => {
-          writer.on('finish', () => resolve(null));
-          writer.on('error', reject);
-        });
-        console.log('get-pip.py downloaded successfully.');
-      }
-      
-      // Install pip
-      console.log('Installing pip using get-pip.py...');
-      try {
-        console.log(`Attempting: ${pythonCmd} get-pip.py --user`);
-        execSync(`${pythonCmd} get-pip.py --user`, { stdio: 'inherit' });
-      } catch (e: any) {
-        console.log(`Installation with ${pythonCmd} get-pip.py failed: ${e.message}`);
-        if (pythonCmd === 'python3') {
-          console.log('Trying python get-pip.py --user...');
-          try {
-            execSync('python get-pip.py --user', { stdio: 'inherit' });
-          } catch (e2: any) {
-            console.log(`Installation with python get-pip.py failed: ${e2.message}`);
-          }
-        }
-      }
-      
-      // Try to find pip in common locations
-      const pipLocations = [
-        `${pythonCmd} -m pip`,
-        'python3 -m pip',
-        'python -m pip',
-        path.join(process.env.HOME || '/root', '.local/bin/pip3'),
-        path.join(process.env.HOME || '/root', '.local/bin/pip'),
-        'pip3',
-        'pip'
-      ];
-
-      for (const pipCmd of pipLocations) {
-        try {
-          console.log(`Attempting installation with: ${pipCmd}`);
-          execSync(`${pipCmd} install ${installTarget} --break-system-packages --user`, { stdio: 'inherit' });
-          installed = true;
-          break;
-        } catch (e: any) {
-          console.log(`Failed with ${pipCmd} and --break-system-packages, trying without...`);
-          try {
-            execSync(`${pipCmd} install ${installTarget} --user`, { stdio: 'inherit' });
-            installed = true;
-            break;
-          } catch (e2: any) {
-            console.log(`Failed with ${pipCmd} entirely: ${e2.message}`);
-          }
-        }
-      }
-      
-      if (installed) {
-        res.json({ success: true, message: "Python environment fixed successfully after installing pip" });
-      } else {
-        throw new Error("Could not install Python dependencies after multiple attempts.");
-      }
+      return res.status(500).json({ 
+        error: "Failed to install Python dependencies after multiple attempts.", 
+        details: lastError 
+      });
     } catch (error: any) {
       console.error('Failed to fix Python environment:', error);
       res.status(500).json({ error: "Failed to fix Python environment", details: error.message });
@@ -668,6 +577,9 @@ async function startServer() {
       details: typeof err === 'object' ? err : String(err)
     });
   });
+
+  // Serve static files from the public directory
+  app.use(express.static(path.join(process.cwd(), 'public')));
 
   if (process.env.NODE_ENV !== "production") {
     const viteModule = await import("vite");

@@ -247,17 +247,28 @@ export default function PricePredictor({
 
   const fixPythonEnvironment = async () => {
     setIsFixingPython(true);
-    const id = toast.loading("Fixing Python environment...");
+    const id = toast.loading("Fixing Python environment... This may take 2-5 minutes. Please do not close the tab.");
     try {
-      const response = await fetch('/api/fix-python', { method: 'POST' });
+      // Use a controller to handle potential timeouts if needed, but here we just wait
+      const response = await fetch('/api/fix-python', { 
+        method: 'POST',
+        headers: { 'Accept': 'application/json' }
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
+        throw new Error(errorData.error || `Server responded with ${response.status}`);
+      }
+      
       const result = await response.json();
       if (result.success) {
         toast.success("Python environment fixed successfully!", { id });
       } else {
         toast.error(result.error || "Failed to fix Python.", { id });
       }
-    } catch (error) {
-      toast.error("Network error while fixing Python.", { id });
+    } catch (error: any) {
+      console.error("Fix Python Error:", error);
+      toast.error(`Error fixing Python: ${error.message || "Network error"}. Check server logs for details.`, { id });
     } finally {
       setIsFixingPython(false);
     }
@@ -266,21 +277,28 @@ export default function PricePredictor({
   const downloadModel = async () => {
     const fileId = "10Md37rJGwK7ww_k3ZChwdlC4IN_BhZWb";
     setIsDownloadingModel(true);
-    const id = toast.loading("Downloading trained model from Google Drive (40MB+)...");
+    const id = toast.loading("Downloading trained model (40MB+)... This may take a few minutes.");
     try {
       const response = await fetch('/api/download-model', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fileId })
       });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
+        throw new Error(errorData.error || `Server responded with ${response.status}`);
+      }
+      
       const result = await response.json();
       if (result.success) {
         toast.success("Model downloaded and installed successfully!", { id });
       } else {
         toast.error(result.error || "Failed to download model.", { id });
       }
-    } catch (error) {
-      toast.error("Network error while downloading model.", { id });
+    } catch (error: any) {
+      console.error("Download Model Error:", error);
+      toast.error(`Error downloading model: ${error.message || "Network error"}.`, { id });
     } finally {
       setIsDownloadingModel(false);
     }

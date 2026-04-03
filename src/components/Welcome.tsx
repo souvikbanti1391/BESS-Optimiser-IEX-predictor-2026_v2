@@ -44,6 +44,7 @@ export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' 
               src="/bess.jpeg" 
               alt="BESS System" 
               className="rounded-3xl shadow-2xl relative z-10 border border-slate-800 w-full object-cover h-[450px]"
+              referrerPolicy="no-referrer"
             />
             {/* Battery Symbols Overlay */}
             <div className="absolute top-4 left-4 z-20 bg-black/50 backdrop-blur-md p-3 rounded-2xl border border-white/10 flex items-center gap-2">
@@ -61,13 +62,14 @@ export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="absolute -top-12 -right-4 z-30 hidden lg:block"
+            className="absolute -top-12 -right-4 z-30"
           >
             <div className="bg-slate-900/80 backdrop-blur-xl p-4 rounded-3xl border border-slate-800 shadow-2xl">
               <img 
                 src="/dvc-logo.jpeg" 
                 alt="DVC Logo" 
-                className="h-16 object-contain brightness-110 contrast-125" 
+                className="h-12 md:h-16 object-contain brightness-110 contrast-125" 
+                referrerPolicy="no-referrer"
               />
             </div>
           </motion.div>
