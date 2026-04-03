@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Battery, Zap, Shield, ArrowRight, Activity, Cpu, Database } from 'lucide-react';
-import bessImg from '../assets/bess.jpeg';
-import dvcLogoImg from '../assets/dvc-logo.jpeg';
+
+// Bypass Render and load directly from GitHub
+const bessImg = "https://raw.githubusercontent.com/souvikbanti1391/BESS-Optimiser-IEX-predictor-2026_v2/main/src/assets/bess.jpeg";
+const dvcLogo = "https://raw.githubusercontent.com/souvikbanti1391/BESS-Optimiser-IEX-predictor-2026_v2/main/src/assets/dvc-logo.jpeg";
 
 export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' | 'optimizer' | 'financials') => void }) {
   return (
@@ -46,7 +48,6 @@ export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' 
               src={bessImg} 
               alt="BESS System" 
               className="rounded-3xl shadow-2xl relative z-10 border border-slate-800 w-full object-cover h-[450px]"
-              referrerPolicy="no-referrer"
             />
             {/* Battery Symbols Overlay */}
             <div className="absolute top-4 left-4 z-20 bg-black/50 backdrop-blur-md p-3 rounded-2xl border border-white/10 flex items-center gap-2">
@@ -68,10 +69,9 @@ export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' 
           >
             <div className="bg-slate-900/80 backdrop-blur-xl p-4 rounded-3xl border border-slate-800 shadow-2xl">
               <img 
-                src={dvcLogoImg} 
+                src={dvcLogo} 
                 alt="DVC Logo" 
                 className="h-12 md:h-16 object-contain brightness-110 contrast-125" 
-                referrerPolicy="no-referrer"
               />
             </div>
           </motion.div>
@@ -83,7 +83,7 @@ export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' 
         {[
           { icon: Zap, title: "IEX Prediction", desc: "Advanced Forecasting models for accurate price forecasting.", tab: 'predictor' },
           { icon: Battery, title: "BESS Scheduling", desc: "Intelligent charge/discharge windows based on market dynamics.", tab: 'optimizer' },
-          { icon: Shield, title: "Risk Analysis", desc: "Comprehensive financial metrics including NPV, IRR, and Payback.", tab: 'financials' }
+          { icon: Shield, title: "Risk Analysis", desc: "Comprehensive financial metrics including NPV, ROI, and Payback.", tab: 'financials' }
         ].map((feature, i) => (
           <motion.div
             key={i}
