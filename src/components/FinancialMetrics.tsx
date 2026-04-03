@@ -622,19 +622,19 @@ export default function FinancialMetrics({ optimizationResults, predictedPrices,
                 <h4 className="text-[10px] font-bold text-blue-400 uppercase mb-3 tracking-widest">BESS Configuration</h4>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase">Power (MW)</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider min-h-[1.25rem] flex items-end">Power (MW)</label>
                     <div className="w-full bg-slate-900/50 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white font-bold">
                       {powerMw} MW
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase">Duration (H)</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider min-h-[1.25rem] flex items-end">Duration (H)</label>
                     <div className="w-full bg-slate-900/50 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white font-bold">
                       {durationHr} Hr
                     </div>
                   </div>
                   <div className="col-span-2 space-y-1">
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase">Energy Capacity (MWh)</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider min-h-[1.25rem] flex items-end">Energy Capacity (MWh)</label>
                     <div className="w-full bg-blue-900/20 border border-blue-500/30 rounded-lg px-3 py-2 text-sm text-blue-400 font-bold">
                       {energyMwh} MWh
                     </div>
@@ -732,7 +732,7 @@ export default function FinancialMetrics({ optimizationResults, predictedPrices,
                 <h4 className="text-[10px] font-bold text-blue-400 uppercase mb-3 tracking-widest">REVENUE MODEL</h4>
                 <div className="space-y-3">
                   <div className="space-y-1">
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">CAPACITY TARIFF (₹/MWH/YR)</label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider min-h-[28px] flex flex-col justify-end">CAPACITY TARIFF (₹/MWH/YR)</label>
                     <input 
                       type="number" 
                       value={isNaN(capacityTariff) ? '' : capacityTariff}
