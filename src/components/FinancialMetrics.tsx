@@ -645,7 +645,7 @@ export default function FinancialMetrics({ optimizationResults, predictedPrices,
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Project Life (Y)</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider min-h-[1.25rem] flex items-end">Project Life (Y)</label>
                   <input 
                     type="number" 
                     value={isNaN(projectLife) ? '' : projectLife}
@@ -657,7 +657,7 @@ export default function FinancialMetrics({ optimizationResults, predictedPrices,
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Disc. Rate (%)</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider min-h-[1.25rem] flex items-end">Disc. Rate (%)</label>
                   <input 
                     type="number" 
                     step="0.1"
@@ -673,7 +673,7 @@ export default function FinancialMetrics({ optimizationResults, predictedPrices,
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">VGF Support (%)</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider min-h-[1.25rem] flex items-end">VGF Support (%)</label>
                   <input 
                     type="number" 
                     value={isNaN(vgfPercent) ? '' : vgfPercent}
@@ -685,7 +685,7 @@ export default function FinancialMetrics({ optimizationResults, predictedPrices,
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Salvage (%)</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider min-h-[1.25rem] flex items-end">Salvage (%)</label>
                   <input 
                     type="number" 
                     step="0.1"
@@ -701,7 +701,7 @@ export default function FinancialMetrics({ optimizationResults, predictedPrices,
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Rev. Escal. (%)</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider min-h-[1.25rem] flex items-end">Rev. Escal. (%)</label>
                   <input 
                     type="number" 
                     step="0.1"
@@ -714,7 +714,7 @@ export default function FinancialMetrics({ optimizationResults, predictedPrices,
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">O&M Escal. (%)</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider min-h-[1.25rem] flex items-end">O&M Escal. (%)</label>
                   <input 
                     type="number" 
                     step="0.1"

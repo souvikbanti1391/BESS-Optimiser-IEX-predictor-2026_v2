@@ -483,7 +483,7 @@ export default function BessOptimizer({
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Min SOC (%)</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase min-h-[1.25rem] flex items-end">Min SOC (%)</label>
                     <input 
                       type="number" 
                       value={isNaN(config.socMin) ? '' : config.socMin}
@@ -495,7 +495,7 @@ export default function BessOptimizer({
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Max SOC (%)</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase min-h-[1.25rem] flex items-end">Max SOC (%)</label>
                     <input 
                       type="number" 
                       value={isNaN(config.socMax) ? '' : config.socMax}
@@ -510,7 +510,7 @@ export default function BessOptimizer({
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Initial SOC (%)</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase min-h-[1.25rem] flex items-end">Initial SOC (%)</label>
                     <input 
                       type="number" 
                       value={isNaN(config.socInit) ? '' : config.socInit}
@@ -522,7 +522,7 @@ export default function BessOptimizer({
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Sim. Horizon (Days)</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase min-h-[1.25rem] flex items-end">Sim. Horizon (Days)</label>
                     <input 
                       type="number" 
                       min={1}
@@ -548,7 +548,7 @@ export default function BessOptimizer({
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Lookahead (Days)</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase min-h-[1.25rem] flex items-end">Lookahead (Days)</label>
                     <input 
                       type="number" 
                       min={1}
@@ -562,7 +562,7 @@ export default function BessOptimizer({
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Charge Eff. (%)</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase min-h-[1.25rem] flex items-end">Charge Eff. (%)</label>
                     <input 
                       type="number" 
                       value={isNaN(config.etaC) ? '' : config.etaC}
@@ -577,7 +577,7 @@ export default function BessOptimizer({
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Discharge Eff. (%)</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase min-h-[1.25rem] flex items-end">Discharge Eff. (%)</label>
                     <input 
                       type="number" 
                       value={isNaN(config.etaD) ? '' : config.etaD}
@@ -589,7 +589,7 @@ export default function BessOptimizer({
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Degradation Cost (₹/kWh)</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase min-h-[1.25rem] flex items-end">Degradation Cost (₹/kWh)</label>
                     <input 
                       type="number" 
                       step="0.1"
@@ -605,7 +605,7 @@ export default function BessOptimizer({
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Low P-tile</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase min-h-[1.25rem] flex items-end">Low P-tile</label>
                     <input 
                       type="number" 
                       value={isNaN(config.lowPercentile) ? '' : config.lowPercentile}
@@ -617,7 +617,7 @@ export default function BessOptimizer({
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">High P-tile</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase min-h-[1.25rem] flex items-end">High P-tile</label>
                     <input 
                       type="number" 
                       value={isNaN(config.highPercentile) ? '' : config.highPercentile}

@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Battery, Zap, Shield, ArrowRight, Activity, Cpu, Database } from 'lucide-react';
+import bessImg from '../assets/bess.jpeg';
+import dvcLogo from '../assets/dvc-logo.jpeg';
 
 export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' | 'optimizer' | 'financials') => void }) {
   return (
@@ -41,10 +43,9 @@ export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' 
           >
             <div className="absolute -inset-4 bg-blue-600/20 rounded-full blur-3xl opacity-30" />
             <img 
-              src="/bess.jpeg" 
+              src={bessImg} 
               alt="BESS System" 
               className="rounded-3xl shadow-2xl relative z-10 border border-slate-800 w-full object-cover h-[450px]"
-              referrerPolicy="no-referrer"
             />
             {/* Battery Symbols Overlay */}
             <div className="absolute top-4 left-4 z-20 bg-black/50 backdrop-blur-md p-3 rounded-2xl border border-white/10 flex items-center gap-2">
@@ -66,10 +67,9 @@ export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' 
           >
             <div className="bg-slate-900/80 backdrop-blur-xl p-4 rounded-3xl border border-slate-800 shadow-2xl">
               <img 
-                src="/dvc-logo.jpeg" 
+                src={dvcLogo} 
                 alt="DVC Logo" 
                 className="h-12 md:h-16 object-contain brightness-110 contrast-125" 
-                referrerPolicy="no-referrer"
               />
             </div>
           </motion.div>
