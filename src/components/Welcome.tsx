@@ -83,7 +83,7 @@ export default function Welcome({ onNavigate }: { onNavigate: (tab: 'predictor' 
         {[
           { icon: Zap, title: "IEX Prediction", desc: "Advanced Forecasting models for accurate price forecasting.", tab: 'predictor' },
           { icon: Battery, title: "BESS Scheduling", desc: "Intelligent charge/discharge windows based on market dynamics.", tab: 'optimizer' },
-          { icon: Shield, title: "Risk Analysis", desc: "Comprehensive financial metrics including NPV, ROI, and Payback.", tab: 'financials' }
+          { icon: Shield, title: "Risk Analysis", desc: "Comprehensive financial metrics including NPV, IRR, and Payback.", tab: 'financials' }
         ].map((feature, i) => (
           <motion.div
             key={i}
